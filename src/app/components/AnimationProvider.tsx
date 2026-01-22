@@ -19,15 +19,15 @@ export function AnimationProvider({ children }: { children: React.ReactNode }) {
   const [contentVisible, setContentVisible] = useState(false);
 
   useEffect(() => {
-    // Logo drop animation completes after about 0.5s
+    // Logo animation starts after 1s delay, completes after about 0.6s
     const logoTimer = setTimeout(() => {
       setLogoLoaded(true);
-    }, 500);
+    }, 1600);
 
-    // Content fades in 0.3s after logo lands
+    // Content fades in after logo lands
     const contentTimer = setTimeout(() => {
       setContentVisible(true);
-    }, 800);
+    }, 1900);
 
     return () => {
       clearTimeout(logoTimer);
