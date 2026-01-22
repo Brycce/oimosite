@@ -2,7 +2,11 @@ import svgPaths from "./svg-myitjiylfn";
 import { motion } from "motion/react";
 import { useState } from "react";
 
-export default function Frame() {
+interface FrameProps {
+  animationDelay?: number;
+}
+
+export default function Frame({ animationDelay = 0 }: FrameProps) {
   const [hoveredPath, setHoveredPath] = useState<number | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -35,7 +39,7 @@ export default function Frame() {
       type: "spring",
       stiffness: 500,
       damping: 30,
-      delay,
+      delay: animationDelay + delay,
     },
   });
 

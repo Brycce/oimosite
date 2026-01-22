@@ -10,18 +10,9 @@ export function Hero() {
     <section className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 bg-gradient-to-b from-slate-900 to-slate-800">
       <div className="max-w-4xl mx-auto text-center">
         <div className="flex justify-center mb-8">
-          <motion.div
-            className="w-56 md:w-72"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              duration: 0.6,
-              ease: "easeOut",
-              delay: 1
-            }}
-          >
-            <Logo />
-          </motion.div>
+          <div className="w-56 md:w-72">
+            <Logo animationDelay={1} />
+          </div>
         </div>
         <motion.h1
           className="mb-6 text-5xl md:text-7xl tracking-tight text-white"
