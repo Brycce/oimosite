@@ -127,18 +127,23 @@ const Form = React.forwardRef<
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const message = formData.get("message") as string;
 
-    // Create mailto link with the form data
-    const subject = encodeURIComponent(`Contact from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
-    );
-    window.location.href = `mailto:bryce@oimo.tech?subject=${subject}&body=${body}`;
+    try {
+      const response = await fetch("https://formspree.io/f/xkojonqa", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
 
-    onSuccess();
+      if (response.ok) {
+        onSuccess();
+        e.currentTarget.reset();
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+    }
   }
 
   function onKeyDown(e: React.KeyboardEvent) {
