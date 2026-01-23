@@ -14,13 +14,19 @@ export function Header() {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <a href="/" className="inline-block">
-        <svg
-          className="w-10 h-10 hover:scale-110 transition-transform"
+        <motion.svg
+          className="w-10 h-10"
           viewBox="0 0 57 57.5"
           fill="none"
+          whileHover={{ rotate: 20 }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 10,
+          }}
         >
           <path d={LOGO_PATH} fill="#E8E580" />
-        </svg>
+        </motion.svg>
       </a>
     </motion.header>
   );
