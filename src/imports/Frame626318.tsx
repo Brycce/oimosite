@@ -1,13 +1,19 @@
 import svgPaths from "./svg-myitjiylfn";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 
 interface FrameProps {
   animationDelay?: number;
 }
 
+// Letter center X positions in SVG coordinates
+const LETTER_CENTERS = [30, 90, 150, 207];
+const MAX_RAISE = -10;
+const PROXIMITY_RADIUS = 80; // How far away the effect starts
+
 export default function Frame({ animationDelay = 0 }: FrameProps) {
-  const [hoveredPath, setHoveredPath] = useState<number | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [letterOffsets, setLetterOffsets] = useState([0, 0, 0, 0]);
   const [hasLoaded, setHasLoaded] = useState(false);
 
   const transition = {
@@ -16,9 +22,30 @@ export default function Frame({ animationDelay = 0 }: FrameProps) {
     damping: 25,
   };
 
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!svgRef.current || !hasLoaded) return;
+
+    const rect = svgRef.current.getBoundingClientRect();
+    const scaleX = 236.794 / rect.width;
+    const mouseX = (e.clientX - rect.left) * scaleX;
+
+    const newOffsets = LETTER_CENTERS.map((centerX) => {
+      const distance = Math.abs(mouseX - centerX);
+      if (distance > PROXIMITY_RADIUS) return 0;
+      const ratio = 1 - distance / PROXIMITY_RADIUS;
+      return MAX_RAISE * ratio * ratio; // Quadratic easing for smoother falloff
+    });
+
+    setLetterOffsets(newOffsets);
+  }, [hasLoaded]);
+
+  const handleMouseLeave = useCallback(() => {
+    setLetterOffsets([0, 0, 0, 0]);
+  }, []);
+
   const pathVariants = (index: number) => ({
     animate: {
-      y: hoveredPath === index ? -10 : 0,
+      y: letterOffsets[index],
       opacity: 1,
     },
     transition: {
@@ -44,8 +71,18 @@ export default function Frame({ animationDelay = 0 }: FrameProps) {
   });
 
   return (
-    <div className="relative size-full">
-      <svg className="block size-full overflow-visible" fill="none" preserveAspectRatio="none" viewBox="0 0 236.794 57.4483">
+    <div
+      className="relative size-full"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <svg
+        ref={svgRef}
+        className="block size-full overflow-visible"
+        fill="none"
+        preserveAspectRatio="none"
+        viewBox="0 0 236.794 57.4483"
+      >
         <g id="Frame 626318">
           <g id="Frame 626316">
             <motion.path
@@ -55,20 +92,7 @@ export default function Frame({ animationDelay = 0 }: FrameProps) {
               initial={onLoadVariants(0).initial}
               animate={hasLoaded ? pathVariants(0).animate : onLoadVariants(0).animate}
               transition={hasLoaded ? pathVariants(0).transition : onLoadVariants(0).transition}
-              onMouseEnter={() => setHoveredPath(0)}
-              onMouseLeave={() => setHoveredPath(null)}
               onAnimationComplete={() => setHasLoaded(true)}
-              style={{ cursor: 'pointer', paddingTop: '20px' }}
-            />
-            {/* Invisible hover area */}
-            <rect
-              x="0"
-              y="-20"
-              width="60"
-              height="77"
-              fill="transparent"
-              onMouseEnter={() => setHoveredPath(0)}
-              onMouseLeave={() => setHoveredPath(null)}
               style={{ cursor: 'pointer' }}
             />
           </g>
@@ -79,19 +103,6 @@ export default function Frame({ animationDelay = 0 }: FrameProps) {
             initial={onLoadVariants(0.05).initial}
             animate={hasLoaded ? pathVariants(1).animate : onLoadVariants(0.05).animate}
             transition={hasLoaded ? pathVariants(1).transition : onLoadVariants(0.05).transition}
-            onMouseEnter={() => setHoveredPath(1)}
-            onMouseLeave={() => setHoveredPath(null)}
-            style={{ cursor: 'pointer' }}
-          />
-          {/* Invisible hover area */}
-          <rect
-            x="60"
-            y="-20"
-            width="60"
-            height="77"
-            fill="transparent"
-            onMouseEnter={() => setHoveredPath(1)}
-            onMouseLeave={() => setHoveredPath(null)}
             style={{ cursor: 'pointer' }}
           />
           <g id="Frame 626287">
@@ -102,19 +113,6 @@ export default function Frame({ animationDelay = 0 }: FrameProps) {
               initial={onLoadVariants(0.1).initial}
               animate={hasLoaded ? pathVariants(2).animate : onLoadVariants(0.1).animate}
               transition={hasLoaded ? pathVariants(2).transition : onLoadVariants(0.1).transition}
-              onMouseEnter={() => setHoveredPath(2)}
-              onMouseLeave={() => setHoveredPath(null)}
-              style={{ cursor: 'pointer' }}
-            />
-            {/* Invisible hover area */}
-            <rect
-              x="120"
-              y="-20"
-              width="60"
-              height="77"
-              fill="transparent"
-              onMouseEnter={() => setHoveredPath(2)}
-              onMouseLeave={() => setHoveredPath(null)}
               style={{ cursor: 'pointer' }}
             />
           </g>
@@ -126,19 +124,6 @@ export default function Frame({ animationDelay = 0 }: FrameProps) {
               initial={onLoadVariants(0.15).initial}
               animate={hasLoaded ? pathVariants(3).animate : onLoadVariants(0.15).animate}
               transition={hasLoaded ? pathVariants(3).transition : onLoadVariants(0.15).transition}
-              onMouseEnter={() => setHoveredPath(3)}
-              onMouseLeave={() => setHoveredPath(null)}
-              style={{ cursor: 'pointer' }}
-            />
-            {/* Invisible hover area */}
-            <rect
-              x="177"
-              y="-20"
-              width="60"
-              height="77"
-              fill="transparent"
-              onMouseEnter={() => setHoveredPath(3)}
-              onMouseLeave={() => setHoveredPath(null)}
               style={{ cursor: 'pointer' }}
             />
           </g>
