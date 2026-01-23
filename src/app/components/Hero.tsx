@@ -28,15 +28,70 @@ export function Hero() {
           animate={contentVisible ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
         >
-          We build powerful SaaS tools for home service professionals and partner with ambitious teams to bring their app ideas to life.
+          Oimo builds and sells software products and helps other teams do the same.
         </motion.p>
         <motion.div
-          className="flex justify-center"
+          className="flex justify-center mb-12"
           initial={{ opacity: 0, x: -20 }}
           animate={contentVisible ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
         >
           <ContactButton />
+        </motion.div>
+
+        <motion.div
+          className="flex flex-col md:flex-row gap-6 justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={contentVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
+        >
+          <div className="bg-slate-700/50 backdrop-blur-sm rounded-xl p-6 flex-1 max-w-sm">
+            <h3 className="text-lg font-medium text-[#E8E580] mb-4">Our Products</h3>
+            <ul className="space-y-3 text-left">
+              <li>
+                <a href="https://conju.ai" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                  <img src="https://www.conju.ai/favicon.ico" alt="" className="w-5 h-5 rounded" />
+                  Conju.ai <span className="text-slate-500 text-sm">(acquired)</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://aplusreviews.io" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                  <img src="https://aplusreviews.io/favicon.ico" alt="" className="w-5 h-5 rounded" />
+                  A Plus Reviews
+                </a>
+              </li>
+              <li>
+                <a href="https://callquinn.com" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                  <img src="https://callquinn.com/favicon.ico" alt="" className="w-5 h-5 rounded" />
+                  CallQuinn <span className="text-slate-500 text-sm">(in development)</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://dreema.io" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                  <img src="https://dreema.io/favicon.ico" alt="" className="w-5 h-5 rounded" />
+                  Dreema <span className="text-slate-500 text-sm">(in development)</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-slate-700/50 backdrop-blur-sm rounded-xl p-6 flex-1 max-w-sm">
+            <h3 className="text-lg font-medium text-[#E8E580] mb-4">Teams We've Helped</h3>
+            <ul className="space-y-3 text-left">
+              <li>
+                <a href="https://localbuild.ca" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                  <img src="https://localbuild.ca/favicon.ico" alt="" className="w-5 h-5 rounded" />
+                  LocalBuild
+                </a>
+              </li>
+              <li>
+                <a href="https://deeppersonality.app" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                  <img src="https://deeppersonality.app/favicon.ico" alt="" className="w-5 h-5 rounded" />
+                  Deep Personality
+                </a>
+              </li>
+            </ul>
+          </div>
         </motion.div>
       </div>
     </section>
