@@ -84,12 +84,6 @@ export function Hero() {
                   LocalBuild
                 </a>
               </li>
-              <li>
-                <a href="https://deeppersonality.app" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
-                  <img src="/logos/deeppersonality.svg" alt="" className="w-5 h-5" />
-                  Deep Personality
-                </a>
-              </li>
             </ul>
           </div>
         </motion.div>
