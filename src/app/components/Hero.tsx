@@ -56,7 +56,7 @@ export function Hero() {
               </li>
               <li>
                 <a href="https://aplusreviews.io" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
-                  <img src="https://aplusreviews.io/favicon.ico" alt="" className="w-5 h-5 rounded" />
+                  <span className="w-5 h-5 rounded bg-[#E8E580] text-slate-900 text-xs font-bold flex items-center justify-center">A+</span>
                   A Plus Reviews
                 </a>
               </li>
