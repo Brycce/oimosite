@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import React from "react";
 import { cx } from "class-variance-authority";
 import { useClickOutside } from "@/app/hooks/use-click-outside";
+import { useIsMobile } from "@/app/components/ui/use-mobile";
 import { Mail } from "lucide-react";
 
 const SPEED = 1;
@@ -20,10 +21,13 @@ const useContact = () => React.useContext(ContactContext);
 
 export function ContactButton() {
   const rootRef = React.useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   const nameRef = React.useRef<HTMLInputElement | null>(null);
   const [showForm, setShowForm] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
+
+  const formHeight = isMobile ? FORM_HEIGHT_MOBILE : FORM_HEIGHT_DESKTOP;
 
   function closeForm() {
     setShowForm(false);
@@ -67,7 +71,7 @@ export function ContactButton() {
       initial={false}
       animate={{
         width: showForm ? "min(400px, calc(100vw - 48px))" : "auto",
-        height: showForm ? FORM_HEIGHT : 56,
+        height: showForm ? formHeight : 56,
         borderRadius: showForm ? 14 : 28,
       }}
       transition={{
@@ -112,7 +116,8 @@ function Button() {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-const FORM_HEIGHT = 280;
+const FORM_HEIGHT_DESKTOP = 280;
+const FORM_HEIGHT_MOBILE = 340;
 
 const Form = React.forwardRef<
   HTMLInputElement,
@@ -122,6 +127,8 @@ const Form = React.forwardRef<
 >(({ onSuccess }, ref) => {
   const { closeForm, showForm } = useContact();
   const submitRef = React.useRef<HTMLButtonElement>(null);
+  const isMobile = useIsMobile();
+  const formHeight = isMobile ? FORM_HEIGHT_MOBILE : FORM_HEIGHT_DESKTOP;
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -160,7 +167,7 @@ const Form = React.forwardRef<
       onSubmit={onSubmit}
       className="absolute bottom-0 w-full"
       style={{
-        height: FORM_HEIGHT,
+        height: formHeight,
         pointerEvents: showForm ? "all" : "none",
       }}
     >
@@ -178,7 +185,7 @@ const Form = React.forwardRef<
             }}
             className="p-4 flex flex-col h-full gap-3"
           >
-            <div className="flex justify-end items-center">
+            <div className="hidden md:flex justify-end items-center">
               <button
                 type="submit"
                 ref={submitRef}
@@ -214,6 +221,12 @@ const Form = React.forwardRef<
               onKeyDown={onKeyDown}
               spellCheck={false}
             />
+            <button
+              type="submit"
+              className="md:hidden w-full py-3 bg-[#E8E580] text-slate-900 font-medium rounded-lg active:scale-95 transition-transform"
+            >
+              Send
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
