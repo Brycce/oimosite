@@ -66,7 +66,7 @@ export function ContactButton() {
       )}
       initial={false}
       animate={{
-        width: showForm ? FORM_WIDTH : "auto",
+        width: showForm ? "min(400px, calc(100vw - 48px))" : "auto",
         height: showForm ? FORM_HEIGHT : 56,
         borderRadius: showForm ? 14 : 28,
       }}
@@ -112,7 +112,6 @@ function Button() {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-const FORM_WIDTH = 400;
 const FORM_HEIGHT = 280;
 
 const Form = React.forwardRef<
@@ -159,9 +158,8 @@ const Form = React.forwardRef<
   return (
     <form
       onSubmit={onSubmit}
-      className="absolute bottom-0"
+      className="absolute bottom-0 w-full"
       style={{
-        width: FORM_WIDTH,
         height: FORM_HEIGHT,
         pointerEvents: showForm ? "all" : "none",
       }}
